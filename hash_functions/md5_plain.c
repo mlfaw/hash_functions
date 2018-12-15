@@ -56,7 +56,7 @@ static uint8_t PADDING[MD5_BLOCK_LENGTH] = {
  * initialization constants.
  */
 void
-MD5Init_plain(MD5_CTX *ctx)
+MD5_Init_plain(MD5_CTX *ctx)
 {
 	ctx->count = 0;
 	ctx->state[0] = 0x67452301;
@@ -70,7 +70,7 @@ MD5Init_plain(MD5_CTX *ctx)
  * of bytes.
  */
 void
-MD5Update_plain(MD5_CTX *ctx, const void *inputptr, size_t len)
+MD5_Update_plain(MD5_CTX *ctx, const void *inputptr, size_t len)
 {
 	const uint8_t *input = inputptr;
 	size_t have, need;
@@ -85,7 +85,7 @@ MD5Update_plain(MD5_CTX *ctx, const void *inputptr, size_t len)
 	if (len >= need) {
 		if (have != 0) {
 			memcpy(ctx->buffer + have, input, need);
-			MD5Transform_plain(ctx->state, ctx->buffer);
+			MD5_Transform_plain(ctx->state, ctx->buffer);
 			input += need;
 			len -= need;
 			have = 0;
@@ -93,7 +93,7 @@ MD5Update_plain(MD5_CTX *ctx, const void *inputptr, size_t len)
 
 		/* Process data in MD5_BLOCK_LENGTH-byte chunks. */
 		while (len >= MD5_BLOCK_LENGTH) {
-			MD5Transform_plain(ctx->state, input);
+			MD5_Transform_plain(ctx->state, input);
 			input += MD5_BLOCK_LENGTH;
 			len -= MD5_BLOCK_LENGTH;
 		}
@@ -109,7 +109,7 @@ MD5Update_plain(MD5_CTX *ctx, const void *inputptr, size_t len)
  * 1 0* (64-bit count of bits processed, MSB-first)
  */
 void
-MD5Final_plain(unsigned char digest[MD5_DIGEST_LENGTH], MD5_CTX *ctx)
+MD5_Final_plain(MD5_CTX *ctx, unsigned char digest[MD5_DIGEST_LENGTH])
 {
 	uint8_t count[8];
 	size_t padlen;
@@ -123,8 +123,8 @@ MD5Final_plain(unsigned char digest[MD5_DIGEST_LENGTH], MD5_CTX *ctx)
 	    ((ctx->count >> 3) & (MD5_BLOCK_LENGTH - 1));
 	if (padlen < 1 + 8)
 		padlen += MD5_BLOCK_LENGTH;
-	MD5Update_plain(ctx, PADDING, padlen - 8);		/* padlen - 8 <= 64 */
-	MD5Update_plain(ctx, count, 8);
+	MD5_Update_plain(ctx, PADDING, padlen - 8);		/* padlen - 8 <= 64 */
+	MD5_Update_plain(ctx, count, 8);
 
 	for (i = 0; i < 4; i++)
 		PUT_32BIT_LE(digest + i * 4, ctx->state[i]);
@@ -159,7 +159,7 @@ MD5Final_plain(unsigned char digest[MD5_DIGEST_LENGTH], MD5_CTX *ctx)
  * the data and converts bytes into longwords for this routine.
  */
 void
-MD5Transform_plain(uint32_t state[4], const uint8_t block[MD5_BLOCK_LENGTH])
+MD5_Transform_plain(uint32_t state[4], const uint8_t block[MD5_BLOCK_LENGTH])
 {
 	uint32_t a, b, c, d, in[MD5_BLOCK_LENGTH / 4];
 

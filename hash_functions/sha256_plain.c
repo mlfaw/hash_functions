@@ -18,7 +18,7 @@ This code is based on public domain code from Wei Dai's Crypto++ library. */
 
 /* #define _SHA256_UNROLL2 */
 
-void Sha256_Init_plain(CSha256 *p)
+void SHA256_Init_plain(SHA256_CTX *p)
 {
   p->state[0] = 0x6a09e667;
   p->state[1] = 0xbb67ae85;
@@ -109,7 +109,7 @@ static const UInt32 K[64] = {
   0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-static void Sha256_WriteByteBlock(CSha256 *p)
+static void Sha256_WriteByteBlock(SHA256_CTX *p)
 {
   UInt32 W[16];
   unsigned j;
@@ -175,7 +175,7 @@ static void Sha256_WriteByteBlock(CSha256 *p)
 #undef s0
 #undef s1
 
-void Sha256_Update_plain(CSha256 *p, const void *data_, size_t size)
+void SHA256_Update_plain(SHA256_CTX *p, const void *data_, size_t size)
 {
   const Byte *data = data_;
   if (size == 0)
@@ -213,7 +213,7 @@ void Sha256_Update_plain(CSha256 *p, const void *data_, size_t size)
     memcpy(p->buffer, data, size);
 }
 
-void Sha256_Final_plain(CSha256 *p, Byte *digest)
+void SHA256_Final_plain(SHA256_CTX *p, Byte *digest)
 {
   unsigned pos = (unsigned)p->count & 0x3F;
   unsigned i;
@@ -245,5 +245,5 @@ void Sha256_Final_plain(CSha256 *p, Byte *digest)
     digest += 8;
   }
   
-  Sha256_Init_plain(p);
+  SHA256_Init_plain(p);
 }

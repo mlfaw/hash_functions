@@ -30,12 +30,12 @@ typedef struct MD5Context {
 	uint8_t buffer[MD5_BLOCK_LENGTH];	/* input buffer */
 } MD5_CTX;
 
-void	 MD5Init_plain(MD5_CTX *);
-void	 MD5Update_plain(MD5_CTX *, const void *, size_t);
+void	 MD5_Init_plain(MD5_CTX *);
+void	 MD5_Update_plain(MD5_CTX *, const void *, size_t);
 		//__attribute__((__bounded__(__string__,2,3)));
-void	 MD5Final_plain(uint8_t [MD5_DIGEST_LENGTH], MD5_CTX *);
-		//__attribute__((__bounded__(__minbytes__,1,MD5_DIGEST_LENGTH)));
-void	 MD5Transform_plain(uint32_t [4], const uint8_t [MD5_BLOCK_LENGTH]);
+void	 MD5_Final_plain(MD5_CTX *, uint8_t [MD5_DIGEST_LENGTH]);
+		//__attribute__((__bounded__(__minbytes__,2,MD5_DIGEST_LENGTH)));
+void	 MD5_Transform_plain(uint32_t [4], const uint8_t [MD5_BLOCK_LENGTH]);
 		//__attribute__((__bounded__(__minbytes__,1,4)))
 		//__attribute__((__bounded__(__minbytes__,2,MD5_BLOCK_LENGTH)));
 

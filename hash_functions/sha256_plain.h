@@ -8,18 +8,18 @@
 
 EXTERN_C_BEGIN
 
-#define SHA256_DIGEST_SIZE 32
+#define SHA256_DIGEST_LENGTH 32
 
 typedef struct
 {
   UInt32 state[8];
   UInt64 count;
   Byte buffer[64];
-} CSha256;
+} SHA256_CTX;
 
-void Sha256_Init_plain(CSha256 *p);
-void Sha256_Update_plain(CSha256 *p, const void *data, size_t size);
-void Sha256_Final_plain(CSha256 *p, Byte *digest);
+void SHA256_Init_plain(SHA256_CTX *p);
+void SHA256_Update_plain(SHA256_CTX *p, const void *data, size_t size);
+void SHA256_Final_plain(SHA256_CTX *p, Byte *digest);
 
 EXTERN_C_END
 
