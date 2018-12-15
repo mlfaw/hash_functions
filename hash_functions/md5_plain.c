@@ -163,7 +163,7 @@ MD5Transform_plain(uint32_t state[4], const uint8_t block[MD5_BLOCK_LENGTH])
 {
 	uint32_t a, b, c, d, in[MD5_BLOCK_LENGTH / 4];
 
-#if BYTE_ORDER == LITTLE_ENDIAN
+#if BYTE_ORDER == LITTLE_ENDIAN or defined(_WIN32)
 	memcpy(in, block, sizeof(in));
 #else
 	for (a = 0; a < MD5_BLOCK_LENGTH / 4; a++) {
@@ -260,3 +260,9 @@ MD5Transform_plain(uint32_t state[4], const uint8_t block[MD5_BLOCK_LENGTH])
 
 #undef PUT_64BIT_LE
 #undef PUT_32BIT_LE
+
+#undef F1
+#undef F2
+#undef F3
+#undef F4
+#undef MD5STEP
