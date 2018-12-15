@@ -8,7 +8,7 @@ This code is based on public domain code from Wei Dai's Crypto++ library. */
 
 #include "CpuArch.h"
 #include "RotateDefs.h"
-#include "Sha256.h"
+#include "sha256_plain.h"
 
 /* define it for speed optimization */
 #ifndef _SFX
@@ -18,7 +18,7 @@ This code is based on public domain code from Wei Dai's Crypto++ library. */
 
 /* #define _SHA256_UNROLL2 */
 
-void Sha256_Init(CSha256 *p)
+void Sha256_Init_plain(CSha256 *p)
 {
   p->state[0] = 0x6a09e667;
   p->state[1] = 0xbb67ae85;
@@ -175,8 +175,9 @@ static void Sha256_WriteByteBlock(CSha256 *p)
 #undef s0
 #undef s1
 
-void Sha256_Update(CSha256 *p, const Byte *data, size_t size)
+void Sha256_Update_plain(CSha256 *p, const void *data_, size_t size)
 {
+  const Byte *data = data_;
   if (size == 0)
     return;
 
@@ -212,7 +213,7 @@ void Sha256_Update(CSha256 *p, const Byte *data, size_t size)
     memcpy(p->buffer, data, size);
 }
 
-void Sha256_Final(CSha256 *p, Byte *digest)
+void Sha256_Final_plain(CSha256 *p, Byte *digest)
 {
   unsigned pos = (unsigned)p->count & 0x3F;
   unsigned i;
@@ -244,5 +245,5 @@ void Sha256_Final(CSha256 *p, Byte *digest)
     digest += 8;
   }
   
-  Sha256_Init(p);
+  Sha256_Init_plain(p);
 }
