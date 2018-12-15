@@ -41,6 +41,10 @@
 	(cp)[1] = (value) >> 8;						\
 	(cp)[0] = (value); } while (0)
 
+#ifdef __cpluscplus
+extern "C" {
+#endif
+
 static uint8_t PADDING[MD5_BLOCK_LENGTH] = {
 	0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -249,6 +253,10 @@ MD5Transform_plain(uint32_t state[4], const uint8_t block[MD5_BLOCK_LENGTH])
 	state[2] += c;
 	state[3] += d;
 }
+
+#ifdef __cpluscplus
+}
+#endif
 
 #undef PUT_64BIT_LE
 #undef PUT_32BIT_LE
