@@ -16,6 +16,7 @@
 #define _MD5_PLAIN_H_
 
 #include <stdint.h>
+#include <string.h> // size_t
 
 #define	MD5_BLOCK_LENGTH		64
 #define	MD5_DIGEST_LENGTH		16
